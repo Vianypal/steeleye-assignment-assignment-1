@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Data
 import mockData from "../assets/data.json";
-import timestamps from "../assets/timeStamps.json";
+import timeStamps from "../assets/timeStamps.json";
 
 // Components
 import Dropdown from "../component/dropdown/Dropdown";
@@ -19,11 +19,46 @@ const Dashboard = () => {
   const [searchText, setSearchText] = useState("");
   const [selectedOrderDetails, setSelectedOrderDetails] = useState({});
   const [selectedOrderTimeStamps, setSelectedOrderTimeStamps] = useState({});
+ 
 
+  
+    const value=mockData.results.length;
+  
+   
+  const [combinedData,setCombinedData]=useState([]);
+  useEffect(() => {
+    const combinedRows = mockData.results.map((row) => {
+      const orderId = row["&id"];
+      const timestamp = timeStamps[orderId];
+      console.log(timestamp);
+      console.log(orderId);
+      return { ...row, order1: timestamp };
+      
+    });
+    setCombinedData(combinedRows);
+  }, []);
+  
+  //for searching
+
+  const [filteredData, setFilteredData] = useState([]);
+  useEffect(() => {
+    const filteredRows = combinedData.filter((row) =>
+      row["&id"].toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredData(filteredRows);
+  }, [combinedData, searchText]);
+
+  const handleRowClick=(row)=>{
+    setSelectedOrderDetails(row.executionDetails);
+    setSelectedOrderTimeStamps(row.timestamps);
+    console.log(row);
+
+  };
+  
   return (
     <div>
       <div className={styles.header}>
-        <HeaderTitle primaryTitle="Orders" secondaryTitle="5 orders" />
+        <HeaderTitle primaryTitle="Orders" secondaryTitle={`${value} orders`}  />
         <div className={styles.actionBox}>
           <Search
             value={searchText}
@@ -47,7 +82,7 @@ const Dashboard = () => {
             title="Selected Order Timestamps"
           />
         </div>
-        <List rows={mockData.results} />
+        <List rows={filteredData} currency={currency} onRowClick={handleRowClick} />
       </div>
     </div>
   );

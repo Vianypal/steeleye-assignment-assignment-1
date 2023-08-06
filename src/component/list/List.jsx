@@ -5,8 +5,15 @@ import ListHeader from "./ListHeader";
 import ListHeaderCell from "./ListHeaderCell";
 
 import styles from "./List.module.css";
+import { useEffect, useState } from "react";
+import timestamps from '../../assets/timeStamps.json';
 
-const List = ({ rows }) => {
+
+
+const List = ({ rows, OnRowClick ,currency}) => {
+
+ 
+console.log(rows);
   return (
     <table className={styles.container}>
       <thead>
@@ -20,12 +27,15 @@ const List = ({ rows }) => {
       </thead>
       <tbody>
         {rows.map((row) => (
-          <ListRow>
+          <ListRow key={row["&id"]}
+          OnRowClick={OnRowClick}
+          row={row}
+          >
             <ListRowCell>{row["&id"]}</ListRowCell>
             <ListRowCell>{row.executionDetails.buySellIndicator}</ListRowCell>
             <ListRowCell>{row.executionDetails.orderStatus}</ListRowCell>
-            <ListRowCell>{row.orderSubmitted}</ListRowCell>
-            <ListRowCell>{row.bestExecutionData.orderVolume.USD}</ListRowCell>
+            <ListRowCell>{row.order1}</ListRowCell>
+            <ListRowCell>{row.bestExecutionData.orderVolume[currency]}</ListRowCell>
           </ListRow>
         ))}
       </tbody>
