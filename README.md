@@ -1,29 +1,39 @@
-# Instructions
+This project is a dashboard app that displays a list of orders and provides various features to interact with the data.
 
-- clone this repo and open with your favorite code editor
+Features Added
+Display Total Number of Orders:
 
-- make sure you are checked out to `master` branch
+The header title now displays the total number of orders in the format Orders: {mockdata.result.length}.
+Display Order Submitted Date:
 
-- to run the app `npm install` then `npm start`
+The List component has been updated to combine the order data with timestamps from the timestamps object. The order submitted date is now displayed in the table.
+Display Currency Value for Order Volume:
 
-## Please fix the following issues
+The Dashboard component now passes the selected currency to the List component, which then displays the order volume in the selected currency.
+Search Feature on Order IDs:
 
-1.  In the title of the header, it displays `5 orders` but there are `6 orders` in the table. We want to display the `total` number of `orders` in the header title
+The Dashboard component now includes a search bar that allows users to search for specific order IDs. The list is filtered based on the search text.
+Clear Console Errors and Warnings:
 
-2.  In the table order submitted date is missing, we have timestamp data included in the `src\assets\timeStamps.json` with the corresponding ids, please combine that with the order data and make sure the order submitted date is being displayed in the table
+The code has been updated to fix any undefined variables, incorrect imports, or missing dependencies, clearing all console errors and warnings.
+Populating Card on Row Click:
 
-3.  Order Volume cell is displaying USD values, can you please make it display the currency value selected on the dropdown located in the header of the dashboard
-
-4.  Can you please add search feature on the order IDs with the search bar given in the header
-
-5.  Please clear the console errors and warnings.
-
-6.  When user selects an order, can you populate the Card on top of the listing component as shown in the image
-
-![alt text](dashboard.JPG)
-
-## Bonus
-
-- run storybook `npm run storybook`
-
-1. Please add storybook to one of the components
+The List component now accepts an onRowClick prop, and when a row is clicked, it triggers the handleRowClick function in the Dashboard component. The selectedOrderDetails state is updated with the clicked row's data.
+Getting Started
+Clone the repository to your local machine.
+bash
+Copy code
+git clone https://github.com/your-username/dashboard-app.git
+Install the required dependencies.
+bash
+Copy code
+cd dashboard-app
+npm install
+Start the development server.
+bash
+Copy code
+npm start
+Open the app in your web browser.
+bash
+Copy code
+http://localhost:3000
